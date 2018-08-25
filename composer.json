@@ -1,0 +1,40 @@
+{
+    "name": "benjaminhirsch/nova-slug-field",
+    "description": "A Laravel Nova field to generate a slugs.",
+    "keywords": [
+        "laravel",
+        "nova"
+    ],
+    "authors": [
+        {
+            "name": "Benjamin Hirsch",
+            "email": "mail@benjaminhirsch.net",
+            "role": "Developer",
+            "homepage": "https://wwwbenjaminhirsch.net"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/benjaminhirsch/nova-slug-field/issues"
+    },
+    "license": "MIT",
+    "require": {
+        "php": ">=7.1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Benjaminhirsch\\NovaSlugField\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Benjaminhirsch\\NovaSlugField\\FieldServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
