@@ -3,7 +3,7 @@
 Simple Laravel Nova Slug field. Generating a slugified version of a text 
 input. See the result of the slug  while typing.
  
-### Details Page
+### Edit form
 
 ![details page select](https://raw.githubusercontent.com/benjaminhirsch/benjaminhirsch.github.io/master/repository-assets/nova-slug-demo.gif)
 
