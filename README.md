@@ -18,15 +18,12 @@ composer require benjaminhirsch/nova-slug-field
 ```
 
 ## Usage
-
+Define the following fields in your resource in the ```fields``` method:
 ```
 TextWithSlug::make('Name')
-    ->sortable()
-    ->slug('Slug')
-    ->rules('required', 'max:255'),
+    ->slug('Slug'),
 
-Slug::make('Slug')
-    ->rules('required', 'max:255'),
+Slug::make('Slug'),
 ```
 
 This first field definition is the field which you want to create the slug of. The second field 
