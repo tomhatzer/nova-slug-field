@@ -20,6 +20,11 @@ composer require benjaminhirsch/nova-slug-field
 ## Usage
 Define the following fields in your resource in the ```fields``` method:
 ```
+use Benjaminhirsch\NovaSlugField\Slug;
+use Benjaminhirsch\NovaSlugField\TextWithSlug;
+
+...
+
 TextWithSlug::make('Name')
     ->slug('Slug'),
 
