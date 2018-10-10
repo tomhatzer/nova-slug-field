@@ -3275,7 +3275,7 @@ exports.default = {
      * Set the initial value for the field
      */
     setInitialValue: function setInitialValue() {
-      this.value = this.field.value || '';
+      this.value = !(this.field.value === undefined || this.field.value === null) ? this.field.value : '';
     },
 
 
@@ -3388,6 +3388,12 @@ exports.default = {
   },
 
 
+  watch: {
+    cardsEndpoint: function cardsEndpoint() {
+      this.fetchCards();
+    }
+  },
+
   methods: {
     fetchCards: function () {
       var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
@@ -3473,7 +3479,7 @@ exports.default = {
      * Convert the given localized date time string to the application's timezone.
      */
     toAppTimezone: function toAppTimezone(value) {
-      return value ? moment.tz(value, this.userTimezone).clone().tz(Nova.config.timezone).format('YYYY-MM-DD kk:mm:ss') : value;
+      return value ? moment.tz(value, this.userTimezone).clone().tz(Nova.config.timezone).format('YYYY-MM-DD HH:mm:ss') : value;
     },
 
 
@@ -3485,7 +3491,7 @@ exports.default = {
         return value;
       }
 
-      return moment.tz(value, Nova.config.timezone).clone().tz(this.userTimezone).format('YYYY-MM-DD kk:mm:ss');
+      return moment.tz(value, Nova.config.timezone).clone().tz(this.userTimezone).format('YYYY-MM-DD HH:mm:ss');
     },
 
 
@@ -3503,7 +3509,7 @@ exports.default = {
         return localized.format(field.format);
       }
 
-      return this.usesTwelveHourTime ? localized.format('YYYY-MM-DD h:mm:ss A') : localized.format('YYYY-MM-DD kk:mm:ss');
+      return this.usesTwelveHourTime ? localized.format('YYYY-MM-DD h:mm:ss A') : localized.format('YYYY-MM-DD HH:mm:ss');
     },
 
 
@@ -10306,7 +10312,7 @@ module.exports = g;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(3);
-module.exports = __webpack_require__(16);
+module.exports = __webpack_require__(24);
 
 
 /***/ }),
@@ -10318,9 +10324,9 @@ Nova.booting(function (Vue, router) {
     Vue.component('detail-nova-slug-field', __webpack_require__(7));
     Vue.component('form-nova-slug-field', __webpack_require__(10));
 
-    Vue.component('index-nova-textwithslug-field', __webpack_require__(30));
-    Vue.component('detail-nova-textwithslug-field', __webpack_require__(33));
-    Vue.component('form-nova-textwithslug-field', __webpack_require__(36));
+    Vue.component('index-nova-textwithslug-field', __webpack_require__(15));
+    Vue.component('detail-nova-textwithslug-field', __webpack_require__(18));
+    Vue.component('form-nova-textwithslug-field', __webpack_require__(21));
 });
 
 /***/ }),
@@ -10496,7 +10502,7 @@ var normalizeComponent = __webpack_require__(0)
 /* script */
 var __vue_script__ = __webpack_require__(11)
 /* template */
-var __vue_template__ = __webpack_require__(12)
+var __vue_template__ = __webpack_require__(14)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -10542,6 +10548,9 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_nova__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_nova___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_laravel_nova__);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
 //
 //
 //
@@ -10561,7 +10570,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 
-var slugify = __webpack_require__(28);
+var slugify = __webpack_require__(12);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     mixins: [__WEBPACK_IMPORTED_MODULE_0_laravel_nova__["FormField"], __WEBPACK_IMPORTED_MODULE_0_laravel_nova__["HandlesValidationErrors"]],
@@ -10581,6 +10590,25 @@ var slugify = __webpack_require__(28);
         });
     },
 
+
+    computed: {
+        defaultAttributes: function defaultAttributes() {
+            return {
+                type: this.field.type || 'text',
+                min: this.field.min,
+                max: this.field.max,
+                step: this.field.step,
+                pattern: this.field.pattern,
+                placeholder: this.field.placeholder || this.field.name,
+                class: this.errorClasses
+            };
+        },
+        extraAttributes: function extraAttributes() {
+            var attrs = this.field.extraAttributes;
+
+            return _extends({}, this.defaultAttributes, attrs);
+        }
+    },
 
     methods: {
 
@@ -10625,91 +10653,11 @@ var slugify = __webpack_require__(28);
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "default-field",
-    { attrs: { field: _vm.field } },
-    [
-      _c("template", { slot: "field" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.value,
-              expression: "value"
-            }
-          ],
-          staticClass: "w-full form-control form-input form-input-bordered",
-          class: _vm.errorClasses,
-          attrs: {
-            id: _vm.field.name,
-            type: "text",
-            placeholder: _vm.field.name
-          },
-          domProps: { value: _vm.value },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.value = $event.target.value
-            }
-          }
-        }),
-        _vm._v(" "),
-        _vm.hasError
-          ? _c("p", { staticClass: "my-2 text-danger" }, [
-              _vm._v("\n            " + _vm._s(_vm.firstError) + "\n        ")
-            ])
-          : _vm._e()
-      ])
-    ],
-    2
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-57607386", module.exports)
-  }
-}
-
-/***/ }),
-/* 13 */,
-/* 14 */,
-/* 15 */,
-/* 16 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 17 */,
-/* 18 */,
-/* 19 */,
-/* 20 */,
-/* 21 */,
-/* 22 */,
-/* 23 */,
-/* 24 */,
-/* 25 */,
-/* 26 */,
-/* 27 */,
-/* 28 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(29);
+module.exports = __webpack_require__(13);
 
 
 /***/ }),
-/* 29 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (root) {
@@ -12404,15 +12352,83 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (root)
 })(this);
 
 /***/ }),
-/* 30 */
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "default-field",
+    { attrs: { field: _vm.field } },
+    [
+      _c("template", { slot: "field" }, [
+        _c(
+          "input",
+          _vm._b(
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.value,
+                  expression: "value"
+                }
+              ],
+              staticClass: "w-full form-control form-input form-input-bordered",
+              class: _vm.errorClasses,
+              attrs: {
+                id: _vm.field.name,
+                type: "text",
+                placeholder: _vm.field.name
+              },
+              domProps: { value: _vm.value },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.value = $event.target.value
+                }
+              }
+            },
+            "input",
+            _vm.extraAttributes,
+            false
+          )
+        ),
+        _vm._v(" "),
+        _vm.hasError
+          ? _c("p", { staticClass: "my-2 text-danger" }, [
+              _vm._v("\n            " + _vm._s(_vm.firstError) + "\n        ")
+            ])
+          : _vm._e()
+      ])
+    ],
+    2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-57607386", module.exports)
+  }
+}
+
+/***/ }),
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(31)
+var __vue_script__ = __webpack_require__(16)
 /* template */
-var __vue_template__ = __webpack_require__(32)
+var __vue_template__ = __webpack_require__(17)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -12451,7 +12467,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 31 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12466,7 +12482,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 32 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -12486,15 +12502,15 @@ if (false) {
 }
 
 /***/ }),
-/* 33 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(34)
+var __vue_script__ = __webpack_require__(19)
 /* template */
-var __vue_template__ = __webpack_require__(35)
+var __vue_template__ = __webpack_require__(20)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -12533,7 +12549,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 34 */
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12548,7 +12564,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 35 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -12568,15 +12584,15 @@ if (false) {
 }
 
 /***/ }),
-/* 36 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(37)
+var __vue_script__ = __webpack_require__(22)
 /* template */
-var __vue_template__ = __webpack_require__(38)
+var __vue_template__ = __webpack_require__(23)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -12615,13 +12631,16 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 37 */
+/* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_nova__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_nova___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_laravel_nova__);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
 //
 //
 //
@@ -12649,6 +12668,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     mixins: [__WEBPACK_IMPORTED_MODULE_0_laravel_nova__["HandlesValidationErrors"], __WEBPACK_IMPORTED_MODULE_0_laravel_nova__["FormField"]],
 
+    computed: {
+        defaultAttributes: function defaultAttributes() {
+            return {
+                type: this.field.type || 'text',
+                min: this.field.min,
+                max: this.field.max,
+                step: this.field.step,
+                pattern: this.field.pattern,
+                placeholder: this.field.placeholder || this.field.name,
+                class: this.errorClasses
+            };
+        },
+        extraAttributes: function extraAttributes() {
+            var attrs = this.field.extraAttributes;
+
+            return _extends({}, this.defaultAttributes, attrs);
+        }
+    },
+
     methods: {
         handleKeydown: function handleKeydown(event) {
             Nova.$emit('field-update-' + this.field.slug, {
@@ -12659,7 +12697,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 38 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -12671,34 +12709,42 @@ var render = function() {
     { attrs: { field: _vm.field } },
     [
       _c("template", { slot: "field" }, [
-        _c("input", {
-          directives: [
+        _c(
+          "input",
+          _vm._b(
             {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.value,
-              expression: "value"
-            }
-          ],
-          staticClass: "w-full form-control form-input form-input-bordered",
-          class: _vm.errorClasses,
-          attrs: {
-            id: _vm.field.name,
-            dusk: _vm.field.attribute,
-            type: "text",
-            placeholder: _vm.field.name
-          },
-          domProps: { value: _vm.value },
-          on: {
-            keyup: _vm.handleKeydown,
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.value,
+                  expression: "value"
+                }
+              ],
+              staticClass: "w-full form-control form-input form-input-bordered",
+              class: _vm.errorClasses,
+              attrs: {
+                id: _vm.field.name,
+                dusk: _vm.field.attribute,
+                type: "text",
+                placeholder: _vm.field.name
+              },
+              domProps: { value: _vm.value },
+              on: {
+                keyup: _vm.handleKeydown,
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.value = $event.target.value
+                }
               }
-              _vm.value = $event.target.value
-            }
-          }
-        }),
+            },
+            "input",
+            _vm.extraAttributes,
+            false
+          )
+        ),
         _vm._v(" "),
         _vm.hasError
           ? _c("p", { staticClass: "my-2 text-danger" }, [
@@ -12719,6 +12765,12 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-759fac30", module.exports)
   }
 }
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
