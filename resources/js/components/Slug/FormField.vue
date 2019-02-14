@@ -30,7 +30,7 @@ export default {
      */
     mounted() {
         Nova.$on('field-update-' + this.field.name, ({value}) => {
-            this.value = slugify(value);
+            this.value = slugify(value, this.field.slugifyOptions || {});
         })
     },
 
