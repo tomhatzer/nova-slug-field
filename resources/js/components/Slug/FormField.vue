@@ -9,7 +9,7 @@
                 v-model="value"
             />
 
-            <p v-if="hasError" class="my-2 text-danger">
+            <p v-if="hasError" class="help-text my-2 text-danger">
                 {{ firstError }}
             </p>
         </template>
