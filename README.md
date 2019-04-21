@@ -31,6 +31,36 @@ TextWithSlug::make('Name')
 Slug::make('Slug'),
 ```
 
+#####Slug with a preview of the generated URL
+This will display the full URL including the generated slug as a link below the input field.
+```
+use Benjaminhirsch\NovaSlugField\Slug;
+use Benjaminhirsch\NovaSlugField\TextWithSlug;
+
+...
+
+TextWithSlug::make('Name')
+    ->slug('Slug'),
+
+Slug::make('Slug')
+    ->showUrlPreview('http://www.foo.bar'),
+```
+
+#####Slug with disabled auto update
+This is especially usefull, when you are updating the field which the slug belongs to and don't wan't the slug to be updated automatically.
+```
+use Benjaminhirsch\NovaSlugField\Slug;
+use Benjaminhirsch\NovaSlugField\TextWithSlug;
+
+...
+
+TextWithSlug::make('Name')
+    ->slug('Slug'),
+
+Slug::make('Slug')
+    ->disableAutoUpdateWhenUpdating(),
+```
+
 This first field definition is the field which you want to create the slug of. The second field 
 definition represents the slugified version. With the ```->slug('name')``` method, you  define 
 the name of the field which holds the slug. It is possible to create multiple slugs on a single
