@@ -23,6 +23,20 @@ class Slug extends Field
     private $disableAutoUpdateWhenUpdating = false;
 
     /**
+     * Optionally show a full url
+     * @var null|string
+     */
+    private $showUrlPreview;
+
+    /**
+     * Passing options to the js library used for the slug generation
+     * https://www.npmjs.com/package/speakingurl
+     *
+     * @var array
+     */
+    private $slugifyOptions = [];
+
+    /**
      * Specify options to pass to speakingurl.
      *
      * @param array $options
@@ -31,7 +45,8 @@ class Slug extends Field
      */
     public function slugifyOptions(array $options): Element
     {
-        return $this->withMeta(['slugifyOptions' => $options]);
+        $this->slugifyOptions = $options;
+        return $this;
     }
 
     /**
@@ -46,10 +61,24 @@ class Slug extends Field
         return $this;
     }
 
+    /**
+     * Specify that the element should not be automatically updated when
+     * updating the parent field
+     *
+     * @return $this
+     */
+    public function showUrlPreview(string $url): Element
+    {
+        $this->showUrlPreview = $url;
+        return $this;
+    }
+
     public function jsonSerialize()
     {
         return array_merge([
-            'disableAutoUpdateWhenUpdating' => $this->disableAutoUpdateWhenUpdating
+            'disableAutoUpdateWhenUpdating' => $this->disableAutoUpdateWhenUpdating,
+            'slugifyOptions' => $this->slugifyOptions,
+            'showPreviewUrl' => $this->showUrlPreview,
         ], parent::jsonSerialize());
     }
 }

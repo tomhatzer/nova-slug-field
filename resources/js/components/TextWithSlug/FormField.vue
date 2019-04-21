@@ -13,7 +13,6 @@
         </template>
     </default-field>
 </template>
-
 <script>
     import { FormField, HandlesValidationErrors } from 'laravel-nova'
 
@@ -43,7 +42,7 @@
                     ...this.defaultAttributes,
                     ...attrs,
                 }
-            },
+            }
         },
 
         methods: {

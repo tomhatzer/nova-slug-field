@@ -9,6 +9,9 @@
                 v-bind="extraAttributes"
                 :disabled="isReadonly"
             />
+            <div v-if="field.showPreviewUrl !== null" class="mt-6">
+                <a :href=previewUrl target="_blank">{{ previewUrl }}</a>
+            </div>
         </template>
     </default-field>
 </template>
@@ -41,6 +44,7 @@ export default {
                 max: this.field.max,
                 step: this.field.step,
                 pattern: this.field.pattern,
+                showPreviewUrl: this.field.showPreviewUrl,
                 placeholder: this.field.placeholder || this.field.name,
                 class: this.errorClasses,
             }
@@ -57,6 +61,10 @@ export default {
                 ...attrs,
             }
         },
+
+        previewUrl() {
+            return this.field.showPreviewUrl + '/' + this.value;
+        }
     },
 
     methods: {
