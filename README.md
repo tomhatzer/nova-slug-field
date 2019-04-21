@@ -31,7 +31,7 @@ TextWithSlug::make('Name')
 Slug::make('Slug'),
 ```
 
-#####Slug with a preview of the generated URL
+##### Slug with a preview of the generated URL
 This will display the full URL including the generated slug as a link below the input field.
 ```
 use Benjaminhirsch\NovaSlugField\Slug;
@@ -46,7 +46,7 @@ Slug::make('Slug')
     ->showUrlPreview('http://www.foo.bar'),
 ```
 
-#####Slug with disabled auto update
+##### Slug with disabled auto update
 This is especially usefull, when you are updating the field which the slug belongs to and don't wan't the slug to be updated automatically.
 ```
 use Benjaminhirsch\NovaSlugField\Slug;
