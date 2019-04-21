@@ -1,17 +1,14 @@
 <template>
-    <default-field :field="field">
+    <default-field :field="field" :errors="errors">
         <template slot="field">
-            <input :id="field.name" type="text"
+            <input
                 class="w-full form-control form-input form-input-bordered"
-                :class="errorClasses"
-                :placeholder="field.name"
-                v-bind="extraAttributes"
+                :id="field.attribute"
+                :dusk="field.attribute"
                 v-model="value"
+                v-bind="extraAttributes"
+                :disabled="isReadonly"
             />
-
-            <p v-if="hasError" class="my-2 text-danger">
-                {{ firstError }}
-            </p>
         </template>
     </default-field>
 </template>

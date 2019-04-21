@@ -10657,9 +10657,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
 
 
 var slugify = __webpack_require__(12);
@@ -12443,49 +12440,130 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "default-field",
-    { attrs: { field: _vm.field } },
+    { attrs: { field: _vm.field, errors: _vm.errors } },
     [
       _c("template", { slot: "field" }, [
-        _c(
-          "input",
-          _vm._b(
-            {
-              directives: [
+        _vm.extraAttributes.type === "checkbox"
+          ? _c(
+              "input",
+              _vm._b(
                 {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.value,
-                  expression: "value"
-                }
-              ],
-              staticClass: "w-full form-control form-input form-input-bordered",
-              class: _vm.errorClasses,
-              attrs: {
-                id: _vm.field.name,
-                type: "text",
-                placeholder: _vm.field.name
-              },
-              domProps: { value: _vm.value },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.value,
+                      expression: "value"
+                    }
+                  ],
+                  staticClass:
+                    "w-full form-control form-input form-input-bordered",
+                  attrs: {
+                    id: _vm.field.attribute,
+                    dusk: _vm.field.attribute,
+                    disabled: _vm.isReadonly,
+                    type: "checkbox"
+                  },
+                  domProps: {
+                    checked: Array.isArray(_vm.value)
+                      ? _vm._i(_vm.value, null) > -1
+                      : _vm.value
+                  },
+                  on: {
+                    change: function($event) {
+                      var $$a = _vm.value,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = null,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 && (_vm.value = $$a.concat([$$v]))
+                        } else {
+                          $$i > -1 &&
+                            (_vm.value = $$a
+                              .slice(0, $$i)
+                              .concat($$a.slice($$i + 1)))
+                        }
+                      } else {
+                        _vm.value = $$c
+                      }
+                    }
                   }
-                  _vm.value = $event.target.value
-                }
-              }
-            },
-            "input",
-            _vm.extraAttributes,
-            false
-          )
-        ),
-        _vm._v(" "),
-        _vm.hasError
-          ? _c("p", { staticClass: "my-2 text-danger" }, [
-              _vm._v("\n            " + _vm._s(_vm.firstError) + "\n        ")
-            ])
-          : _vm._e()
+                },
+                "input",
+                _vm.extraAttributes,
+                false
+              )
+            )
+          : _vm.extraAttributes.type === "radio"
+          ? _c(
+              "input",
+              _vm._b(
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.value,
+                      expression: "value"
+                    }
+                  ],
+                  staticClass:
+                    "w-full form-control form-input form-input-bordered",
+                  attrs: {
+                    id: _vm.field.attribute,
+                    dusk: _vm.field.attribute,
+                    disabled: _vm.isReadonly,
+                    type: "radio"
+                  },
+                  domProps: { checked: _vm._q(_vm.value, null) },
+                  on: {
+                    change: function($event) {
+                      _vm.value = null
+                    }
+                  }
+                },
+                "input",
+                _vm.extraAttributes,
+                false
+              )
+            )
+          : _c(
+              "input",
+              _vm._b(
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.value,
+                      expression: "value"
+                    }
+                  ],
+                  staticClass:
+                    "w-full form-control form-input form-input-bordered",
+                  attrs: {
+                    id: _vm.field.attribute,
+                    dusk: _vm.field.attribute,
+                    disabled: _vm.isReadonly,
+                    type: _vm.extraAttributes.type
+                  },
+                  domProps: { value: _vm.value },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.value = $event.target.value
+                    }
+                  }
+                },
+                "input",
+                _vm.extraAttributes,
+                false
+              )
+            )
       ])
     ],
     2
@@ -12738,12 +12816,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 
@@ -12788,51 +12860,133 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "default-field",
-    { attrs: { field: _vm.field } },
+    { attrs: { field: _vm.field, errors: _vm.errors } },
     [
       _c("template", { slot: "field" }, [
-        _c(
-          "input",
-          _vm._b(
-            {
-              directives: [
+        _vm.extraAttributes.type === "checkbox"
+          ? _c(
+              "input",
+              _vm._b(
                 {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.value,
-                  expression: "value"
-                }
-              ],
-              staticClass: "w-full form-control form-input form-input-bordered",
-              class: _vm.errorClasses,
-              attrs: {
-                id: _vm.field.name,
-                dusk: _vm.field.attribute,
-                type: "text",
-                placeholder: _vm.field.name
-              },
-              domProps: { value: _vm.value },
-              on: {
-                keyup: _vm.handleKeydown,
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.value,
+                      expression: "value"
+                    }
+                  ],
+                  staticClass:
+                    "w-full form-control form-input form-input-bordered",
+                  attrs: {
+                    id: _vm.field.attribute,
+                    dusk: _vm.field.attribute,
+                    disabled: _vm.isReadonly,
+                    type: "checkbox"
+                  },
+                  domProps: {
+                    checked: Array.isArray(_vm.value)
+                      ? _vm._i(_vm.value, null) > -1
+                      : _vm.value
+                  },
+                  on: {
+                    keyup: _vm.handleKeydown,
+                    change: function($event) {
+                      var $$a = _vm.value,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = null,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 && (_vm.value = $$a.concat([$$v]))
+                        } else {
+                          $$i > -1 &&
+                            (_vm.value = $$a
+                              .slice(0, $$i)
+                              .concat($$a.slice($$i + 1)))
+                        }
+                      } else {
+                        _vm.value = $$c
+                      }
+                    }
                   }
-                  _vm.value = $event.target.value
-                }
-              }
-            },
-            "input",
-            _vm.extraAttributes,
-            false
-          )
-        ),
-        _vm._v(" "),
-        _vm.hasError
-          ? _c("p", { staticClass: "my-2 text-danger" }, [
-              _vm._v("\n            " + _vm._s(_vm.firstError) + "\n        ")
-            ])
-          : _vm._e()
+                },
+                "input",
+                _vm.extraAttributes,
+                false
+              )
+            )
+          : _vm.extraAttributes.type === "radio"
+          ? _c(
+              "input",
+              _vm._b(
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.value,
+                      expression: "value"
+                    }
+                  ],
+                  staticClass:
+                    "w-full form-control form-input form-input-bordered",
+                  attrs: {
+                    id: _vm.field.attribute,
+                    dusk: _vm.field.attribute,
+                    disabled: _vm.isReadonly,
+                    type: "radio"
+                  },
+                  domProps: { checked: _vm._q(_vm.value, null) },
+                  on: {
+                    keyup: _vm.handleKeydown,
+                    change: function($event) {
+                      _vm.value = null
+                    }
+                  }
+                },
+                "input",
+                _vm.extraAttributes,
+                false
+              )
+            )
+          : _c(
+              "input",
+              _vm._b(
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.value,
+                      expression: "value"
+                    }
+                  ],
+                  staticClass:
+                    "w-full form-control form-input form-input-bordered",
+                  attrs: {
+                    id: _vm.field.attribute,
+                    dusk: _vm.field.attribute,
+                    disabled: _vm.isReadonly,
+                    type: _vm.extraAttributes.type
+                  },
+                  domProps: { value: _vm.value },
+                  on: {
+                    keyup: _vm.handleKeydown,
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.value = $event.target.value
+                    }
+                  }
+                },
+                "input",
+                _vm.extraAttributes,
+                false
+              )
+            )
       ])
     ],
     2

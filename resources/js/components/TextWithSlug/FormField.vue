@@ -1,21 +1,15 @@
 <template>
-    <default-field :field="field">
+    <default-field :field="field" :errors="errors">
         <template slot="field">
             <input
-                    :id="field.name"
-                    :dusk="field.attribute"
-                    type="text"
-                    @keyup="handleKeydown"
-                    v-bind="extraAttributes"
-                    v-model="value"
-                    class="w-full form-control form-input form-input-bordered"
-                    :class="errorClasses"
-                    :placeholder="field.name"
+                class="w-full form-control form-input form-input-bordered"
+                :id="field.attribute"
+                :dusk="field.attribute"
+                v-model="value"
+                @keyup="handleKeydown"
+                v-bind="extraAttributes"
+                :disabled="isReadonly"
             />
-
-            <p v-if="hasError" class="my-2 text-danger">
-                {{ firstError }}
-            </p>
         </template>
     </default-field>
 </template>
