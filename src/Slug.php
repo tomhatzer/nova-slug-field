@@ -16,6 +16,13 @@ class Slug extends Field
     public $component = 'nova-slug-field';
 
     /**
+     * Disable auto update behavior
+     *
+     * @var bool
+     */
+    private $disableAutoUpdateWhenUpdating = false;
+
+    /**
      * Specify options to pass to speakingurl.
      *
      * @param array $options
@@ -25,5 +32,24 @@ class Slug extends Field
     public function slugifyOptions(array $options): Element
     {
         return $this->withMeta(['slugifyOptions' => $options]);
+    }
+
+    /**
+     * Specify that the element should not be automatically updated when
+     * updating the parent field
+     *
+     * @return $this
+     */
+    public function disableAutoUpdateWhenUpdating(): Element
+    {
+        $this->disableAutoUpdateWhenUpdating = true;
+        return $this;
+    }
+
+    public function jsonSerialize()
+    {
+        return array_merge([
+            'disableAutoUpdateWhenUpdating' => $this->disableAutoUpdateWhenUpdating
+        ], parent::jsonSerialize());
     }
 }

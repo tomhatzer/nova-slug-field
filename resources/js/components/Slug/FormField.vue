@@ -30,7 +30,9 @@ export default {
      */
     mounted() {
         Nova.$on('field-update-' + this.field.name, ({value}) => {
-            this.value = slugify(value, this.field.slugifyOptions || {});
+            if (this.field.disableAutoUpdateWhenUpdating === false) {
+                this.value = slugify(value, this.field.slugifyOptions || {});
+            }
         })
     },
 
@@ -61,16 +63,7 @@ export default {
     },
 
     methods: {
-        
-        /*
-         * Generate the slug
-         */
-        generateSlug(value) {
-            Nova.request().get('/nova-vendor/novaslugfield/slugify?str=' + encodeURI(value)).then(response => {
-                this.value = response.data.slug;
-            });
-        },
-        
+
         /*
          * Set the initial, internal value for the field.
          */
