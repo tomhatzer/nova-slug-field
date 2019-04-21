@@ -29,7 +29,7 @@ export default {
      * Mount the component.
      */
     mounted() {
-        Nova.$on('field-update-' + this.field.name, ({value}) => {
+        Nova.$on('field-update-' + this.field.attribute, ({value}) => {
             if (this.field.disableAutoUpdateWhenUpdating === false) {
                 this.value = slugify(value, this.field.slugifyOptions || {});
             }

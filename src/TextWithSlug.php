@@ -17,7 +17,7 @@ class TextWithSlug extends Text
      *
      * @return $this
      */
-    public function slug($slugField = 'Slug'): Element
+    public function slug($slugField = 'slug'): Element
     {
         return $this->withMeta([__FUNCTION__ => $slugField]);
     }
