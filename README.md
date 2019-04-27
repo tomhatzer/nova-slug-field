@@ -26,7 +26,7 @@ use Benjaminhirsch\NovaSlugField\TextWithSlug;
 ...
 
 TextWithSlug::make('Name')
-    ->slug('Slug'),
+    ->slug('slug'),
 
 Slug::make('Slug'),
 ```
@@ -40,7 +40,7 @@ use Benjaminhirsch\NovaSlugField\TextWithSlug;
 ...
 
 TextWithSlug::make('Name')
-    ->slug('Slug'),
+    ->slug('slug'),
 
 Slug::make('Slug')
     ->showUrlPreview('http://www.foo.bar'),
@@ -55,7 +55,7 @@ use Benjaminhirsch\NovaSlugField\TextWithSlug;
 ...
 
 TextWithSlug::make('Name')
-    ->slug('Slug'),
+    ->slug('slug'),
 
 Slug::make('Slug')
     ->disableAutoUpdateWhenUpdating(),
