@@ -30,9 +30,10 @@ export default {
      */
     mounted() {
         Nova.$on('field-update-' + this.field.attribute, ({value}) => {
-            if (this.field.disableAutoUpdateWhenUpdating === false) {
-                this.value = slugify(value, this.field.slugifyOptions || {});
+            if (this.field.disableAutoUpdateWhenUpdating === true && this.$router.currentRoute.name !== 'create') {
+                return;
             }
+            this.value = slugify(value, this.field.slugifyOptions || {});
         })
     },
 

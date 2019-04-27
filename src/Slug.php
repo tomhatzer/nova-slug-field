@@ -57,9 +57,7 @@ class Slug extends Field
      */
     public function disableAutoUpdateWhenUpdating(): Element
     {
-        if (request()->get('editMode') !== 'create') {
-            $this->disableAutoUpdateWhenUpdating = true;
-        }
+        $this->disableAutoUpdateWhenUpdating = true;
         return $this;
     }
 
