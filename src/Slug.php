@@ -73,6 +73,16 @@ class Slug extends Field
         return $this;
     }
 
+    /**
+     * Display the field as raw HTML using Vue.
+     *
+     * @return $this
+     */
+    public function asHtml()
+    {
+        return $this->withMeta(['asHtml' => true]);
+    }
+
     public function jsonSerialize()
     {
         return array_merge([
