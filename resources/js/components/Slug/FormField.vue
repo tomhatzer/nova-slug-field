@@ -34,6 +34,7 @@ export default {
                 return;
             }
             this.value = slugify(value, this.field.slugifyOptions || {});
+            this.appendSlugPrefix(this.value);
         })
     },
 
@@ -75,6 +76,18 @@ export default {
          */
         setInitialValue() {
           this.value = this.field.value || ''
+          if(this.$router.currentRoute.name === 'create') {
+            this.appendSlugPrefix() 
+          }
+        },
+
+        /*
+         * Add slug prefix to slug if it is set
+         */
+        appendSlugPrefix() {
+          if(this.field.slugPrefix) {
+            this.value = this.field.slugPrefix + '/' + this.value
+          }
         },
 
         /**

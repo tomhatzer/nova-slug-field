@@ -37,6 +37,13 @@ class Slug extends Field
     private $slugifyOptions = [];
 
     /**
+     * Add prefix for generated slug
+     *
+     * @var null|string
+     */
+    private $slugPrefix; 
+
+    /**
      * Specify options to pass to speakingurl.
      *
      * @param array $options
@@ -74,6 +81,17 @@ class Slug extends Field
     }
 
     /**
+     * Add prefix to generated url
+     *
+     * @return $this
+     */
+    public function slugPrefix(string $prefix): Element
+    {
+        $this->slugPrefix = $prefix;
+        return $this;
+    }
+
+    /**
      * Display the field as raw HTML using Vue.
      *
      * @return $this
@@ -89,6 +107,8 @@ class Slug extends Field
             'disableAutoUpdateWhenUpdating' => $this->disableAutoUpdateWhenUpdating,
             'slugifyOptions' => $this->slugifyOptions,
             'showPreviewUrl' => $this->showUrlPreview,
+            'slugPrefix' => $this->slugPrefix,
+
         ], parent::jsonSerialize());
     }
 }
