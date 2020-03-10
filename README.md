@@ -1,7 +1,7 @@
 # Laravel Nova Slug Field
 
 ## Looking for a new maintainer!
-Due to the fact that I no longer activley working with Laravel as a Framework, I'm looking for someone who is willing to maintain this little project in the future. If you're interested, drop me a message on twitter! https://twitter.com/hirschbenjamin/status/1219726085191061506
+Due to the fact that I no longer activley working with Laravel as a Framework, I'm looking for someone who is willing to maintain this little project in the future. If you're interested, drop me a message on twitter https://twitter.com/hirschbenjamin/status/1219726085191061506 or here: https://github.com/benjaminhirsch/nova-slug-field/issues/22
 
 ---
 
