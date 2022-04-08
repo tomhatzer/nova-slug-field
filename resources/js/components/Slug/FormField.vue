@@ -1,6 +1,6 @@
 <template>
     <default-field :field="field" :errors="errors">
-        <template slot="field">
+        <template #field>
             <input
                 class="w-full form-control form-input form-input-bordered"
                 :id="field.attribute"
@@ -77,7 +77,7 @@ export default {
         setInitialValue() {
           this.value = this.field.value || ''
           if(this.$router.currentRoute.name === 'create') {
-            this.appendSlugPrefix() 
+            this.appendSlugPrefix()
           }
         },
 

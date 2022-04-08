@@ -6,7 +6,7 @@ import TextSlugIndexField from './components/TextWithSlug/IndexField';
 import TextSlugDetailField from './components/TextWithSlug/DetailField';
 import TextSlugFormField from './components/TextWithSlug/FormField';
 
-Nova.booting((Vue, router) => {
+Nova.booting((Vue) => {
     Vue.component('index-nova-slug-field', SlugIndexField);
     Vue.component('detail-nova-slug-field', SlugDetailField);
     Vue.component('form-nova-slug-field', SlugFormField);
