@@ -1,39 +1,38 @@
 <template>
-    <default-field :field="field" :errors="errors">
-        <template slot="field">
-            <input
-                class="w-full form-control form-input form-input-bordered"
-                :id="field.attribute"
-                :dusk="field.attribute"
-                v-model="value"
-                v-bind="extraAttributes"
-                :disabled="isReadonly"
-            />
-            <div v-if="field.showPreviewUrl !== null" class="mt-6">
-                <a :href=previewUrl target="_blank">{{ previewUrl }}</a>
-            </div>
-        </template>
-    </default-field>
+  <DefaultField :field="currentField" :errors="errors">
+    <template #field>
+      <div class="space-y-1">
+        <input
+            v-bind="extraAttributes"
+            class="w-full form-control form-input form-input-bordered"
+            v-model="value"
+            :id="currentField.uniqueKey"
+            :dusk="field.attribute"
+            :disabled="currentlyIsReadonly"
+        />
+        <div v-if="currentField.showPreviewUrl !== null" class="mt-6">
+            <a :href=previewUrl target="_blank">{{ previewUrl }}</a>
+        </div>
+      </div>
+    </template>
+  </DefaultField>
 </template>
 
 <script>
-import { FormField, HandlesValidationErrors } from 'laravel-nova'
+import { DependentFormField, FormField, HandlesValidationErrors } from 'laravel-nova'
 const slugify = require('speakingurl');
 
 export default {
-    mixins: [FormField, HandlesValidationErrors],
-
-    props: ['resourceName', 'resourceId', 'field'],
-
+    mixins: [DependentFormField, FormField, HandlesValidationErrors],
     /**
      * Mount the component.
      */
     mounted() {
-        Nova.$on('field-update-' + this.field.attribute, ({value}) => {
-            if (this.field.disableAutoUpdateWhenUpdating === true && this.$router.currentRoute.name !== 'create') {
+        Nova.$on('field-update-' + this.currentField.attribute, ({value}) => {
+            if (this.currentField.disableAutoUpdateWhenUpdating === true && this.editMode !== 'create') {
                 return;
             }
-            this.value = slugify(value, this.field.slugifyOptions || {});
+            this.value = slugify(value, this.currentField.slugifyOptions || {});
             this.appendSlugPrefix(this.value);
         })
     },
@@ -41,19 +40,19 @@ export default {
     computed: {
         defaultAttributes() {
             return {
-                type: this.field.type || 'text',
-                min: this.field.min,
-                max: this.field.max,
-                step: this.field.step,
-                pattern: this.field.pattern,
-                showPreviewUrl: this.field.showPreviewUrl,
-                placeholder: this.field.placeholder || this.field.name,
+                type: this.currentField.type || 'text',
+                min: this.currentField.min,
+                max: this.currentField.max,
+                step: this.currentField.step,
+                pattern: this.currentField.pattern,
+                showPreviewUrl: this.currentField.showPreviewUrl,
+                placeholder: this.currentField.placeholder || this.currentField.name,
                 class: this.errorClasses,
             }
         },
 
         extraAttributes() {
-            const attrs = this.field.extraAttributes
+            const attrs = this.currentField.extraAttributes
 
             return {
                 // Leave the default attributes even though we can now specify
@@ -65,7 +64,7 @@ export default {
         },
 
         previewUrl() {
-            return this.field.showPreviewUrl + '/' + this.value;
+            return this.currentField.showPreviewUrl + '/' + this.value;
         }
     },
 
@@ -75,8 +74,8 @@ export default {
          * Set the initial, internal value for the field.
          */
         setInitialValue() {
-          this.value = this.field.value || ''
-          if(this.$router.currentRoute.name === 'create') {
+          this.value = this.currentField.value || ''
+          if(this.editMode === 'create') {
             this.appendSlugPrefix() 
           }
         },
@@ -85,8 +84,8 @@ export default {
          * Add slug prefix to slug if it is set
          */
         appendSlugPrefix() {
-          if(this.field.slugPrefix) {
-            this.value = this.field.slugPrefix + '/' + this.value
+          if(this.currentField.slugPrefix) {
+            this.value = this.currentField.slugPrefix + '/' + this.value
           }
         },
 
@@ -94,7 +93,7 @@ export default {
          * Fill the given FormData object with the field's internal value.
          */
         fill(formData) {
-          formData.append(this.field.attribute, this.value || '')
+          formData.append(this.currentField.attribute, this.value || '')
         },
 
         /**

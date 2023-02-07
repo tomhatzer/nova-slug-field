@@ -1,39 +1,42 @@
 <template>
-    <default-field :field="field" :errors="errors">
-        <template slot="field">
+  <DefaultField
+      :field="currentField"
+      :errors="errors"
+  >
+    <template #field>
             <input
                 class="w-full form-control form-input form-input-bordered"
-                :id="field.attribute"
-                :dusk="field.attribute"
+                :id="currentField.uniqueKey"
+                :dusk="currentField.attribute"
                 v-model="value"
                 @keyup="handleKeydown"
                 v-bind="extraAttributes"
-                :disabled="isReadonly"
+                :disabled="currentlyIsReadonly"
             />
         </template>
-    </default-field>
+  </DefaultField>
 </template>
 <script>
-    import { FormField, HandlesValidationErrors } from 'laravel-nova'
+    import { DependentFormField, FormField, HandlesValidationErrors } from 'laravel-nova'
 
     export default {
-        mixins: [HandlesValidationErrors, FormField],
+        mixins: [DependentFormField, HandlesValidationErrors, FormField],
 
         computed: {
             defaultAttributes() {
                 return {
-                    type: this.field.type || 'text',
-                    min: this.field.min,
-                    max: this.field.max,
-                    step: this.field.step,
-                    pattern: this.field.pattern,
-                    placeholder: this.field.placeholder || this.field.name,
+                    type: this.currentField.type || 'text',
+                    min: this.currentField.min,
+                    max: this.currentField.max,
+                    step: this.currentField.step,
+                    pattern: this.currentField.pattern,
+                    placeholder: this.currentField.placeholder || this.currentField.name,
                     class: this.errorClasses,
                 }
             },
 
             extraAttributes() {
-                const attrs = this.field.extraAttributes
+                const attrs = this.currentField.extraAttributes
 
                 return {
                     // Leave the default attributes even though we can now specify
@@ -47,7 +50,7 @@
 
         methods: {
             handleKeydown(event) {
-                Nova.$emit('field-update-' + this.field.slug, {
+                Nova.$emit('field-update-' + this.currentField.slug, {
                     value: event.target.value
                 })
             },
