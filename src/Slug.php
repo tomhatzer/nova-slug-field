@@ -101,7 +101,7 @@ class Slug extends Field
         return $this->withMeta(['asHtml' => true]);
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize() : array
     {
         return array_merge([
             'disableAutoUpdateWhenUpdating' => $this->disableAutoUpdateWhenUpdating,
